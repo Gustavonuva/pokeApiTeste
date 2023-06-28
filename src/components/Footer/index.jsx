@@ -1,5 +1,6 @@
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import Image from "next/image";
 import React from "react";
 
 const Footer = () => {
@@ -7,7 +8,7 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        position: "fixed",
+        position: "static",
         bottom: 0,
         width: "100%",
         backgroundColor: "#f5f5f5",
@@ -15,7 +16,12 @@ const Footer = () => {
         textAlign: "center",
       }}
     >
-      <img src="/Group1.svg" alt="logo Jaime Camara" />
+      <Image
+        src="/Group1.svg"
+        width={170}
+        height={50}
+        alt="logo Jaime Camara"
+      />
 
       <Typography
         variant="body1"

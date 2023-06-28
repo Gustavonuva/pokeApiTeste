@@ -1,7 +1,6 @@
 import {
   AppBar,
   Box,
-  Button,
   IconButton,
   Toolbar,
   Menu,
@@ -11,21 +10,23 @@ import {
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
-import { pokeapi } from "@/utils/br";
 
 const HeaderToolbar = () => {
-  const [menuIn, setMenuIn] = useState(null);
-  const open = Boolean(menuIn);
-  const handleOpen = (event) => {
-    setMenuIn(event.currentTarget);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const isMenuOpen = Boolean(anchorEl);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setMenuIn(null);
+  const handleMenuClose = () => {
+    setAnchorEl(null);
   };
+
+  const menuId = "primary-menu";
 
   return (
-    <Box>
+    <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="default">
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Grid sx={{ cursor: "pointer" }}>
@@ -36,29 +37,35 @@ const HeaderToolbar = () => {
               alt="pokeApi"
             />
           </Grid>
-          <Grid>
-            <Button
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleOpen}
-            >
-              <MenuIcon />
-            </Button>
-            <Menu
-              id="basic-menu"
-              menuIn={menuIn}
-              open={open}
-              onClose={handleClose}
-              sx={{ alignSelf: "end" }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            >
-              <MenuItem onClick={handleClose}>Login</MenuItem>
-              <MenuItem onClick={handleClose}>PokeDex</MenuItem>
-              <MenuItem onClick={handleClose}>Sobre</MenuItem>
-            </Menu>
-          </Grid>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            onClick={handleMenuOpen}
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            id={menuId}
+            anchorEl={anchorEl}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            <MenuItem onClick={handleMenuClose}>Login</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Pokemon</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Sobre</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
     </Box>
