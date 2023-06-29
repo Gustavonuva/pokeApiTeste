@@ -15,7 +15,6 @@ const BuscaAvancada = () => {
   return (
     <>
       <FormControl sx={{ width: 400, marginBottom: 10 }}>
-        {/* <InputLabel id="buscaAvancadaInput">Busca Avançada</InputLabel> */}
         <TextField select id="buscaAvancadaSelect" label="Busca Avançada">
           <Box
             sx={{
