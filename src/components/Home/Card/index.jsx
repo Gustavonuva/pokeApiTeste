@@ -9,9 +9,13 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-const CardPrincipal = ({ name, image, types }) => {
+const CardPrincipal = ({ name, image, types, id }) => {
   const [descricaoPokemon, setDescricaoPokemon] = useState([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     getDescricaoPokemon();
@@ -46,6 +50,13 @@ const CardPrincipal = ({ name, image, types }) => {
     ));
   };
 
+  const handleCardClick = () => {
+    router.push({
+      pathname: "/dadospokemon",
+      query: { name, id },
+    });
+  };
+
   return (
     <Card
       sx={{
@@ -54,31 +65,33 @@ const CardPrincipal = ({ name, image, types }) => {
         boxShadow: "2px 2px 30px 1px rgba(0, 0, 0, 0.2)",
       }}
     >
-      <CardActionArea>
-        <CardMedia
-          sx={{ height: 200, backgroundSize: "70%" }}
-          image={image}
-          title={name}
-        />
-        <CardContent sx={{ background: "#3a343450" }}>
-          <Typography
-            gutterBottom
-            color="white"
-            variant="subtitle1"
-            component="div"
-            fontSize={20}
-          >
-            {name}
-          </Typography>
-          <Typography variant="caption" color="black">
-            {getTextEnglish(descricaoPokemon.flavor_text_entries)}
-          </Typography>
+      <Link href={`/dadospokemon?name=${name}&id=${id}`} passHref>
+        <CardActionArea component="a" onClick={handleCardClick}>
+          <CardMedia
+            sx={{ height: 200, backgroundSize: "70%" }}
+            image={image}
+            title={name}
+          />
+          <CardContent sx={{ background: "#3a343450" }}>
+            <Typography
+              gutterBottom
+              color="white"
+              variant="subtitle1"
+              component="div"
+              fontSize={20}
+            >
+              {name}
+            </Typography>
+            <Typography variant="caption" color="black">
+              {getTextEnglish(descricaoPokemon.flavor_text_entries)}
+            </Typography>
 
-          <Stack direction="row" sx={{ marginTop: "20px" }} spacing={2}>
-            {typeHandler()}
-          </Stack>
-        </CardContent>
-      </CardActionArea>
+            <Stack direction="row" sx={{ marginTop: "20px" }} spacing={2}>
+              {typeHandler()}
+            </Stack>
+          </CardContent>
+        </CardActionArea>
+      </Link>
     </Card>
   );
 };
