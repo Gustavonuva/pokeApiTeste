@@ -3,12 +3,12 @@ import { Box, LinearProgress, Typography } from "@mui/material";
 const EstatisticasPokemons = ({ dadosPokemon }) => {
   console.log(dadosPokemon);
   const data = [
-    { label: "HP", value: dadosPokemon?.stats[0].base_stat },
-    { label: "Ataque", value: dadosPokemon?.stats[1].base_stat },
-    { label: "Defesa", value: dadosPokemon?.stats[2].base_stat },
-    { label: "Ataque especial", value: dadosPokemon?.stats[3].base_stat },
-    { label: "Defesa especial", value: dadosPokemon?.stats[4].base_stat },
-    { label: "Velocidade", value: dadosPokemon?.stats[5].base_stat },
+    { label: "HP", value: dadosPokemon?.stats?.[0]?.base_stat },
+    { label: "Ataque", value: dadosPokemon?.stats?.[1]?.base_stat },
+    { label: "Defesa", value: dadosPokemon?.stats?.[2]?.base_stat },
+    { label: "Ataque especial", value: dadosPokemon?.stats?.[3]?.base_stat },
+    { label: "Defesa especial", value: dadosPokemon?.stats?.[4]?.base_stat },
+    { label: "Velocidade", value: dadosPokemon?.stats?.[5]?.base_stat },
   ];
 
   const MAX_VALUE = 130;

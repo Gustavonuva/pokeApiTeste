@@ -3,7 +3,7 @@ import React from "react";
 
 const TiposEFraquezas = ({ dadosPokemon }) => {
   const tiposHandler = () => {
-    return dadosPokemon.types.map((type) => (
+    return dadosPokemon?.types?.map((type) => (
       <Chip
         key={type.type.name}
         sx={{
