@@ -63,7 +63,6 @@ const DadosPokemon = () => {
     return "";
   };
 
-  console.log(dadosPokemon);
   return (
     <>
       <HeaderToolbar />

@@ -1,5 +1,12 @@
 import { Search, SearchOutlined } from "@mui/icons-material";
-import { Box, Button, Container, Grid, InputAdornment } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  InputAdornment,
+  Pagination,
+} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import React, { useEffect, useState } from "react";
 import BuscaAvancada from "./BuscaAvancada";
@@ -10,32 +17,70 @@ import { Skeletons } from "@/components/Skeletons";
 
 const BarraDePesquisa = () => {
   const [pokemons, setPokemons] = useState([]);
+  const [filteredPokemons, setFilteredPokemons] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(21);
+
+  const paginate = (array, page_size, page_number) => {
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
+  };
 
   useEffect(() => {
     getPokemons();
   }, []);
 
   const getPokemons = () => {
-    var endpoints = [];
-    for (var i = 1; i < 50; i++) {
-      endpoints.push(`https://pokeapi.co/api/v2/pokemon/${i}/`);
-    }
     axios
-      .all(endpoints.map((endpoint) => axios.get(endpoint)))
-      .then((res) => setPokemons(res));
+      .get("https://pokeapi.co/api/v2/pokemon?limit=1000")
+      .then((res) => {
+        const { results } = res.data;
+        const pokemonPromises = results.map((pokemon) =>
+          axios.get(pokemon.url)
+        );
+        return axios.all(pokemonPromises);
+      })
+      .then((res) => {
+        setPokemons(res);
+        setFilteredPokemons(res);
+      });
   };
 
   const pokemonFilter = (name) => {
-    var filterPokemons = [];
     if (name === "") {
-      getPokemons();
+      setFilteredPokemons(pokemons);
+    } else {
+      const filteredPokemons = pokemons.filter((pokemon) =>
+        pokemon.data.name.toLowerCase().includes(name.toLowerCase())
+      );
+      setFilteredPokemons(filteredPokemons);
     }
-    for (var i in pokemons) {
-      if (pokemons[i].data.name.includes(name)) {
-        filterPokemons.push(pokemons[i]);
-      }
+  };
+
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
+
+  const paginatedPokemons = paginate(filteredPokemons, perPage, currentPage);
+  const totalPages = Math.ceil(filteredPokemons.length / perPage);
+
+  const handleSortChange = (orderBy) => {
+    let sortedPokemons = [];
+    if (orderBy === "az") {
+      sortedPokemons = [...filteredPokemons].sort((a, b) => {
+        if (a.data.name && b.data.name) {
+          return a.data.name.localeCompare(b.data.name);
+        }
+        return 0;
+      });
+    } else if (orderBy === "za") {
+      sortedPokemons = [...filteredPokemons].sort((a, b) => {
+        if (a.data.name && b.data.name) {
+          return b.data.name.localeCompare(a.data.name);
+        }
+        return 0;
+      });
     }
-    setPokemons(filterPokemons);
+    setFilteredPokemons(sortedPokemons);
   };
 
   return (
@@ -71,15 +116,15 @@ const BarraDePesquisa = () => {
             <BuscaAvancada />
           </Grid>
           <Grid>
-            <Ordenacao />
+            <Ordenacao onSortChange={handleSortChange} />
           </Grid>
         </Grid>
       </Box>
       <Grid container>
-        {pokemons.length === 0 ? (
+        {filteredPokemons.length === 0 ? (
           <Skeletons />
         ) : (
-          pokemons.map((pokemon, key) => (
+          paginatedPokemons.map((pokemon, key) => (
             <Grid
               item
               xs={8}
@@ -89,18 +134,23 @@ const BarraDePesquisa = () => {
               sx={{ flexWrap: "wrap" }}
               key={key}
             >
-              {/* <Box onClick={() => pokemonPickHandler(pokemon.data)}> */}
               <CardPrincipal
                 name={pokemon.data.name}
                 image={pokemon.data.sprites.front_default}
                 types={pokemon.data.types}
                 id={pokemon.data.id}
               />
-              {/* </Box> */}
             </Grid>
           ))
         )}
       </Grid>
+      <Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+        />
+      </Box>
     </Container>
   );
 };
