@@ -1,38 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PokeApi
 
-## Getting Started
+Este projeto consiste no consumo de uma API que retorna dados de pokémons e seus atributos características.
 
-First, run the development server:
+## Tecnologias utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- Next.js
+- React
+- Material-UI
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- Pesquisa: é possível pesquisar pokémons pelo nome. A lista de pokémons é atualizada em tempo real à medida que o usuário digita.
+- Ordenação: os pokémons podem ser ordenados em ordem alfabética (A-Z e Z-A) pelo nome.
+- Detalhes do Pokémon: ao clicar em um card de pokémon, é direcionado para uma página detalhada com informações adicionais sobre o pokémon.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Como executar o projeto
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+1. Clone o repositório em sua máquina local.
+2. Abra o terminal na pasta do projeto e execute o comando `npm install` para instalar as dependências.
+3. Execute o comando `npm run dev` para iniciar o projeto em modo de desenvolvimento.
+4. Acesse o projeto em seu navegador através do endereço `http://localhost:3000`.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Licença
 
-## Learn More
+Este projeto está licenciado sob a licença [MIT](https://opensource.org/licenses/MIT).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+_Projeto desenvolvido por [Gustavo Vaz]._
